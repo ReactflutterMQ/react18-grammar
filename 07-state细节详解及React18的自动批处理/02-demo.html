@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <script src="../babel.min.js"></script>
+    <script src="../prop-types.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        let app = document.querySelector('#app')
+        let root = ReactDOM.createRoot(app)
+
+        /*
+            1、自动批处理：有助于减少在状态更改时发生的重新渲染次数
+            2、在React18之前也有批处理的，但是在Promise、setTimeout、原生事件中是不起作用的
+            3、ReactDOM.flushSync可以取消批处理操作
+            4、既然默认是自动批处理的，那么setState()是一个异步方法
+            5、批处理就是合并多个setState()，提供了回调写法
+        */
+
+        class Welcome extends React.Component {
+            state = {
+                msg: 'hello',
+                count: 0
+            }
+            handleClick = () => {
+                // this.setState({//setState()是一个异步方法，在同步任务执行完后才会执行
+                //     count: this.state.count + 1
+                // })
+                // console.log(this.state.count);
+
+                // 要想拿到setState更改后的值，可以在setState的回调函数（第二个参数）获取
+                /* this.setState({
+                    count: this.state.count + 1
+                }, () => {// 异步执行结束后的回调
+                    console.log(this.state.count);
+                }) */
+               
+                // 多次批处理同一个属性值，最后一次处理的值会覆盖前面的值
+                // this.setState({//setState()是一个异步方法，在同步任务执行完后才会执行
+                //     count: this.state.count + 1
+                // })
+                // this.setState({//setState()是一个异步方法，在同步任务执行完后才会执行
+                //     count: this.state.count + 1
+                // })
+                // this.setState({//setState()是一个异步方法，在同步任务执行完后才会执行
+                //     count: this.state.count + 1
+                // })
+
+                // 要想不覆盖，可以使用回调函数写法
+                this.setState((state) => ({count: state.count + 1}))
+                this.setState((state) => ({count: state.count + 1}))
+                this.setState((state) => ({count: state.count + 1}))
+                // 上面结果最终返回的count值为3
+            }
+            render() {
+                console.log('render');
+                return (
+                    <div>
+                        <button onClick={this.handleClick}>点击</button>
+                        {this.state.msg}，{this.state.count}
+                    </div>
+                )
+            }
+        }
+
+        let element = (
+            <Welcome />
+        )
+        root.render(element)
+    </script>
+</body>
+
+</html>

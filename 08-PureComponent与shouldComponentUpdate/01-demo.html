@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <script src="../babel.min.js"></script>
+    <script src="../prop-types.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        let app = document.querySelector('#app')
+        let root = ReactDOM.createRoot(app)
+
+        /*
+            1、为了减少没必要的渲染，React给开发者提供了改善渲染的优化方法（shouldComponentUpdate，是react的一个生命周期钩子函数，默认值返回值是一个true）
+            2、PureComponent：自动帮我们比较前后状态和属性的值，如果值相同则不触发render函数重新渲染，否则重新执行render函数
+            3、
+        */
+
+        class Welcome extends React.PureComponent {
+            state = {
+                msg: 'hello',
+                count: 0
+            }
+            handleClick = () => {
+                this.setState({
+                    msg: 'hi'//新修改的msg值和原来的值相同，但是还是会触发render函数并重新渲染
+                });
+            }
+            /* shouldComponentUpdate = (nextProps, nextState) => {
+                // return false;//如果返回false，则无论如何修改值都不会触发rander函数
+                // return true; // 默认值，会直接触发render函数重新渲染
+                if (this.state.msg === nextState.msg) {
+                    return false; // 如果新修改的msg值和原来的值相同，则不触发render函数
+                }
+                return true; // 如果新修改的msg值和原来的值不同，则触发render函数
+            } */
+
+
+            render() {
+                console.log('render');
+                return (
+                    <div>
+                        <button onClick={this.handleClick}>点击</button>
+                        {this.state.msg}，{this.state.count}
+                    </div>
+                )
+            }
+        }
+
+        let element = (
+            <Welcome />
+        )
+        root.render(element)
+    </script>
+</body>
+
+</html>

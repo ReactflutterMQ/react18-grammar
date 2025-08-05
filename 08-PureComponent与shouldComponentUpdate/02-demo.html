@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <script src="../babel.min.js"></script>
+    <script src="../prop-types.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        let app = document.querySelector('#app')
+        let root = ReactDOM.createRoot(app)
+
+        /*
+            1、为了减少没必要的渲染，React给开发者提供了改善渲染的优化方法（shouldComponentUpdate，是react的一个生命周期钩子函数，默认值返回值是一个true）
+            2、PureComponent：自动帮我们比较前后状态和属性的值，如果值相同则不触发render函数重新渲染，否则重新执行render函数
+            3、
+        */
+
+        class Welcome extends React.PureComponent {
+            state = {
+                msg: 'hello',
+                count: 0,
+                list: ['a', 'b', 'c']
+            }
+            handleClick = () => {
+                // 正确用法
+                this.setState({
+                    list: [...this.state.list, 'd']
+                });
+
+                // 错误×
+                /* this.state.list.push('d');  //这种是可变的数据集合，react要求的是不可变的数据集合，因此，这里并不会重新渲染
+                this.setState({
+                    list: this.state.list
+                }) */
+            }
+
+            render() {
+                console.log('render');
+                return (
+                    <div>
+                        <button onClick={this.handleClick}>点击</button>
+                        <ul>
+                            {
+                                this.state.list.map((v, i) => <li key={i}>{v}</li>)
+                            }
+                        </ul>
+                    </div>
+                )
+            }
+        }
+
+        let element = (
+            <Welcome />
+        )
+        root.render(element)
+    </script>
+</body>
+
+</html>

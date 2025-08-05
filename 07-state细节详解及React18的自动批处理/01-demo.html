@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <script src="../babel.min.js"></script>
+    <script src="../prop-types.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        let app = document.querySelector('#app')
+        let root = ReactDOM.createRoot(app)
+
+        /*
+            1、自动批处理：有助于减少在状态更改时发生的重新渲染次数
+            2、在React18之前也有批处理的，但是在Promise、setTimeout、原生事件中是不起作用的
+            3、ReactDOM.flushSync可以取消批处理操作
+        */
+
+        class Welcome extends React.Component {
+            state = {
+                msg: 'hello',
+                count: 0
+            }
+            handleClick = () => {
+                // this.state.msg = 'hi' //修改无效，不要这样写
+
+                // React18之后，这样写是批处理的，会合并多次setState，最终渲染时只会调用一次render函数
+                /* setTimeout(() => {
+                    this.setState({
+                        msg: 'hi'
+                    })
+                    this.setState({
+                        count: 1
+                    })
+                }, 2000) */
+
+                // ReactDOM.flushSync取消批处理，每次修改都会执行一次render函数
+                ReactDOM.flushSync(() => {
+                    this.setState({
+                        msg: 'hi'
+                    })
+                })
+                ReactDOM.flushSync(() => {
+                    this.setState({
+                        count: 1
+                    })
+                })
+
+            }
+            render() {
+                console.log('render');
+                return (
+                    <div>
+                        <button onClick={this.handleClick}>点击</button>
+                        {this.state.msg}，{this.state.count}
+                    </div>
+                )
+            }
+        }
+
+        let element = (
+            <Welcome />
+        )
+        root.render(element)
+    </script>
+</body>
+
+</html>
