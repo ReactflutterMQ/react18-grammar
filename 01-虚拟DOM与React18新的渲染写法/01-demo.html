@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul></ul>
+    <script>
+        /* console.time(1)
+        let ul = document.querySelector('ul');
+
+        for (let i = 0;i < 1000; i++) {
+            ul.innerHTML += `<li>${i}</li>`
+        }
+        console.timeEnd(1)//288.56494140625 ms~301.163818359375 ms */
+
+        console.time(1)
+        let ul = document.querySelector('ul');
+        let str = ''
+        for(let i = 0; i< 1000;i++) {
+            str += `<li>${i}</li>`
+        }
+        ul.innerHTML = str
+        console.timeEnd(1) //0.579833984375 ms~1ms        
+    </script>
+</body>
+</html>

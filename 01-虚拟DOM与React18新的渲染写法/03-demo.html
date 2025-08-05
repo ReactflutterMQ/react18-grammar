@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            border: 1px solid red;
+        }
+    </style>
+    <!-- 处理虚拟dom -->
+    <script src="./react.development.js"></script>
+    <!-- 处理真实dom -->
+    <script src="./react-dom.development.js"></script>
+    <script src="./babel.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        /* 
+         * JSX = JavaScript + XML
+         * 1、标签要小写
+         * 2、单标签要闭合
+         * 3、class属性与for属性
+         * 4、多单词属性需驼峰，data-*不需要
+         * 5、唯一根节点
+        */
+        let app = document.querySelector('#app')
+        let root = ReactDOM.createRoot(app)
+        let element = (
+            <React.Fragment>
+                <h2 title="hi" className="box">
+                    hello world
+                    <span>!!!!!!</span>
+                    <label htmlFor="elemInput">用户名：</label>
+                    <input id="elemInput" type="text" tabIndex="3" />
+                    <input id="elemInput2" type="text" tabIndex="2" data-userid="123" />
+                </h2>
+                <p>1111111</p>
+            </React.Fragment>
+        )
+        root.render(element)
+    </script>
+</body>
+
+</html>

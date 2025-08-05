@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./react.development.js"></script>
+    <script src="./react-dom.development.js"></script>
+    <script src="./babel.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        let app = document.querySelector('#app')
+
+        let root = ReactDOM.createRoot(app)
+        // JSX中不会渲染的值：false null undefined ''
+
+        let data = [
+            { id: 1, text: 'aaa' },
+            { id: 2, text: 'bbb' },
+            { id: 3, text: 'ccc' }
+        ];
+
+        // let ret = [];
+
+        // for (let i = 0; i < data.length; i++) {
+        //     ret.push(<li key={data[i].id}>{data[i].text}</li>)
+        // }
+
+        // ['a', 'b', 'c'] -> 'a,b,c'
+        // { ['a', 'b', 'c'] } -> 'abc'
+
+        let element = (
+            <ul>
+                {
+                    data.map(v => {
+                        return (
+                            <li key={v.id}>{v.text}</li>
+                        )
+                    })
+                }
+            </ul>
+        )
+
+        root.render(element)
+    </script>
+</body>
+
+</html>

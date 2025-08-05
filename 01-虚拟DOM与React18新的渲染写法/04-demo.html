@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./react.development.js"></script>
+    <script src="./react-dom.development.js"></script>
+    <script src="./babel.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        /**
+         * JSX = JavaScript + XML
+         * 1、{}模板语法
+         * 2、添加注释 必须在js环境中（要加{}，然后进行注释）
+         * 3、属性渲染变量
+         * 4、事件渲染函数要包一个{}
+         * 5、style渲染对象（必须要在{}里面，且style样式必须是对象形式）
+         * 6、{}渲染JSX
+        */
+        let app = document.querySelector('#app')
+        let root = ReactDOM.createRoot(app)
+        let myClass = 'box'
+        function handleClick() {
+            console.log('hello');
+        }
+        let myStyle = {
+            color: 'red'
+        }
+        let element = (
+            <div>
+                { /* <p>{ 1+1 }</p> */ }
+                <p className={myClass}>{ 'hello' }</p>
+                <p onClick={handleClick}>{ 'hello'.repeat(3) }</p>
+                <p style={myStyle}>{ true ? 123 : 456 }</p>
+                <p>{ <span>span111</span> }</p>
+            </div>
+        )
+        root.render(element)
+    </script>
+</body>
+</html>

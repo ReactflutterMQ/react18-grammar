@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React</title>
+    <!-- 处理虚拟dom -->
+    <script src="./react.development.js"></script>
+    <!-- 处理真实dom -->
+    <script src="./react-dom.development.js"></script>
+    <script src="./babel.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        // let app = document.querySelector('#app')        
+        // let root = ReactDOM.createRoot(app); // root根对象，react渲染的
+        // // root.render('<h2>hello world</h2>')// 向容器中渲染
+        // let element = <h2 title="hi">hello world</h2>
+        // root.render(element)//报错
+
+        // React.createElement() -> 创建虚拟DOM
+        // let element = React.createElement('h2', { title: 'hi' }, 'hello world');
+        // root.render(element)
+
+        let app = document.querySelector('#app')
+        let root = ReactDOM.createRoot(app);
+        /**
+         * 什么是JSX及JSX详细使用方式
+        */ 
+        let element = (//JSX语法
+            <h2 title="hi">
+                hello world
+                <span>!!!!!!</span>
+            </h2>
+        );
+        root.render(element)
+
+
+
+    </script>
+</body>
+
+</html>
