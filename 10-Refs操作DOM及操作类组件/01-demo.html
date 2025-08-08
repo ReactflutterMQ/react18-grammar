@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <script src="../babel.min.js"></script>
+    <script src="../prop-types.js"></script>
+    <script src="../lodash.min.js"></script>
+    <script src="../immutable.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        let app = document.querySelector('#app')
+        let root = ReactDOM.createRoot(app)
+        /**
+         * Ref操作一般有两种方法：React.createRef()  callbackRef()
+        */
+        class Welcome extends React.PureComponent {
+            // myRef = React.createRef()
+            callbackRef = (element) => {//初始化时触发
+                // console.log(element);
+                // this.myRef = element
+                element.focus();
+            }
+            handleClick = () => {
+                // console.log(this.myRef.current);  // 原生DOM
+                // this.myRef.current.focus();
+                // this.myRef.focus();
+            }
+            render() {
+                return (
+                    <div>
+                        <button onClick={this.handleClick}>点击</button>
+                        <input type="text" ref={this.callbackRef} />
+                    </div>
+                )
+            }
+        }
+
+        let element = (
+            <Welcome />
+        )
+        root.render(element)
+    </script>
+</body>
+
+</html>
