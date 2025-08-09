@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <script src="../babel.min.js"></script>
+    <script src="../prop-types.js"></script>
+    <script src="../lodash.min.js"></script>
+    <script src="../immutable.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        let app = document.querySelector('#app')
+        let root = ReactDOM.createRoot(app)
+
+        class Welcome extends React.Component {
+            state = {
+                fruit: ['苹果', '香蕉']
+            }
+            handleChange = (ev) => {
+                let fruit = [...this.state.fruit]
+                if (ev.target.checked) {
+                    this.setState({
+                        fruit: [...fruit, ev.target.value]
+                    })
+                } else {
+                    fruit.splice(fruit.indexOf(ev.target.value), 1)
+                    this.setState({
+                        fruit
+                    })
+                }
+            }
+            render() {
+                return (
+                    <div>
+                        <input type="checkbox" value="草莓" checked={this.state.fruit.includes('草莓')} onChange={this.handleChange} />草莓
+                        <input type="checkbox" value="苹果" checked={this.state.fruit.includes('苹果')} onChange={this.handleChange} />苹果
+                        <input type="checkbox" value="柠檬" checked={this.state.fruit.includes('柠檬')} onChange={this.handleChange} />柠檬
+                        <input type="checkbox" value="芒果" checked={this.state.fruit.includes('芒果')} onChange={this.handleChange} />芒果
+                        <input type="checkbox" value="香蕉" checked={this.state.fruit.includes('香蕉')} onChange={this.handleChange} />香蕉
+                        <input type="checkbox" value="榴莲" checked={this.state.fruit.includes('榴莲')} onChange={this.handleChange} />榴莲
+                        <br />
+                        <span>您想吃的水果：{this.state.fruit.join('、')}</span>
+                    </div>
+                )
+            }
+        }
+
+        let element = (
+            <Welcome />
+        )
+        root.render(element)
+    </script>
+</body>
+
+</html>

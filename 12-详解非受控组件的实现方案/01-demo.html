@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <script src="../babel.min.js"></script>
+    <script src="../prop-types.js"></script>
+    <script src="../lodash.min.js"></script>
+    <script src="../immutable.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        /* 
+            受控组件中，表单数据是由React组件来管理的。另一种替代
+            方案是使用非受控组件，这时表单数据将交由DOM节点来处理。
+        */
+        let app = document.querySelector('#app')
+        let root = ReactDOM.createRoot(app)
+
+        class Welcome extends React.Component {
+            myRef = React.createRef()
+            handleSubmit = (ev) => {
+                console.log(this.myRef.current.files[0].name);                
+                ev.preventDefault()
+            }
+            render() {
+                return (
+                    <form onSubmit={this.handleSubmit}>
+                        <input type="file" ref={this.myRef} />
+                        <input type="submit" value="submit" />
+                    </form>
+                )
+            }
+        }
+
+        let element = (
+            <Welcome />
+        )
+        root.render(element)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <script src="../babel.min.js"></script>
+    <script src="../prop-types.js"></script>
+    <script src="../lodash.min.js"></script>
+    <script src="../immutable.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        // ref的转发
+        let app = document.querySelector('#app')
+        let root = ReactDOM.createRoot(app)
+
+        class Welcome extends React.Component {
+            state = {
+                city: '北京'
+            }
+            handleClick = (ev) => {
+                this.setState({
+                    city: ev.target.value
+                })
+            }
+            render() {
+                return (
+                    <div>
+                        <select name={this.state.city} onChange={this.handleClick}>
+                            <option value="北京">北京</option>
+                            <option value="上海">上海</option>
+                            <option value="广州">广州</option>
+                            <option value="深圳">深圳</option>
+                        </select> {this.state.city}
+                    </div>
+                )
+            }
+        }
+
+        let element = (
+            <Welcome />
+        )
+        root.render(element)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <script src="../babel.min.js"></script>
+    <script src="../prop-types.js"></script>
+    <script src="../lodash.min.js"></script>
+    <script src="../immutable.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        let app = document.querySelector('#app')
+        let root = ReactDOM.createRoot(app)
+
+        class Welcome extends React.Component {
+            state = {
+                gender: '男'
+            }
+            handleClick = (ev) => {
+                this.setState({
+                    gender: ev.target.value
+                })
+            }
+            render() {
+                return (
+                    <div>
+                        <input type="radio" value="男" checked={ this.state.gender === '男' } onChange={this.handleClick} />男
+                        <input type="radio" value="女" checked={ this.state.gender === '女' } onChange={this.handleClick} />女
+                        <br />
+                        <span>您当前的性别：{this.state.gender}</span>
+                    </div>
+                )
+            }
+        }
+
+        let element = (
+            <Welcome />
+        )
+        root.render(element)
+    </script>
+</body>
+
+</html>
