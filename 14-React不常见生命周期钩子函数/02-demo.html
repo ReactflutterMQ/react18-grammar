@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <script src="../babel.min.js"></script>
+    <script src="../prop-types.js"></script>
+    <script src="../lodash.min.js"></script>
+    <script src="../immutable.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        /* 
+            getDerivedStateFromProps：props派生state的值
+            shouldComponentUpdate：优化render渲染次数
+            getSnapshotBeforeUpdate：DOM更新前的快照
+        */
+        let app = document.querySelector('#app')
+        let root = ReactDOM.createRoot(app)
+
+        class Welcome extends React.Component {
+            myRef = React.createRef()
+            state = {
+                list: ['a', 'b', 'c']
+            }
+            getSnapshotBeforeUpdate(props, state) {
+                return this.myRef.current.clientHeight;
+            }
+            componentDidUpdate(props, state, snapshot) {
+                console.log('高度差：', this.myRef.current.clientHeight - snapshot);
+            }
+            add = () => {
+                this.setState({
+                    list: [...this.state.list, 'd', 'e', 'f']
+                })
+            }
+            render() {
+                return (
+                    <div>
+                        <button onClick={this.add}>添加</button>
+                        <ul ref={this.myRef}>
+                            {
+                                this.state.list.map((v, i) => {
+                                    return (
+                                        <li key={i}>{v}</li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </div>
+                )
+            }
+        }
+
+        let element = (
+            <Welcome />
+        )
+        root.render(element)
+    </script>
+</body>
+
+</html>

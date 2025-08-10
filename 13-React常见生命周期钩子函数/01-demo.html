@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <script src="../babel.min.js"></script>
+    <script src="../prop-types.js"></script>
+    <script src="../lodash.min.js"></script>
+    <script src="../immutable.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        /* 
+            React生命周期钩子函数就是React声明的一些特殊的方法，当组件挂载、更新或
+            卸载时就会去执行这些方法
+        */
+        let app = document.querySelector('#app')
+        let root = ReactDOM.createRoot(app)
+
+        class Welcome extends React.Component {
+            constructor(props) {
+                super(props);
+                console.log('constructor');
+            }
+            state = {
+                msg: 'hello world'
+            }
+            componentDidMount() {
+                // react中发起ajax请求的初始操作，在这个钩子中完成
+                console.log('componentDidMount');
+            }
+            componentDidUpdate() {
+                // 等DOM更新后触发的钩子函数
+                console.log('componentDidUpdate');
+            }
+            componentWillUnmount() {
+                console.log('componentWillUnmount');
+            }
+            handleClick = () => {
+                /* this.setState({
+                    msg: 'hi react'
+                }) */
+                //    this.forceUpdate()//强制更新组件，必触发render函数和componentDidUpdate
+                root.unmount(app)//触发卸载组件
+            }
+            render() {
+                console.log('render');
+                return (
+                    <div>
+                        <button onClick={this.handleClick}>点击</button>
+                        <span>{this.state.msg}</span>
+                    </div>
+                )
+            }
+        }
+
+        let element = (
+            <Welcome />
+        )
+        root.render(element)
+    </script>
+</body>
+
+</html>
