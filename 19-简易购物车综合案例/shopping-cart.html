@@ -20,7 +20,7 @@
         let root = ReactDOM.createRoot(app);
 
         // 购物车组件
-        class Cart extends React.Component {
+        class Cart extends React.PureComponent {
             state = {
                 list: [],
                 total: 0
@@ -28,9 +28,9 @@
             handleMinus = (id) => {
                 return () => {
                     let list = _.cloneDeep(this.state.list)
-                    let number = list.find(v => v.id === id).number
-                    if (number > 1) {
-                        number--   
+                    let now = list.find(v => v.id === id)
+                    if (now.number > 1) {
+                        now.number--
                     }
                     this.setState({
                         list
@@ -40,8 +40,8 @@
             handleAdd = (id) => {
                 return () => {
                     let list = _.cloneDeep(this.state.list)
-                    let number = list.find(v => v.id === id).number
-                    number++
+                    let now = list.find(v => v.id === id)
+                    now.number++
                     this.setState({
                         list
                     })
@@ -58,20 +58,15 @@
                 }
             }
             computedAll = () => {
-                let all = 0
-                let n_list = this.state.list.filter(v => v.isActive)
-                n_list.forEach(v => {
-                    all = all + v.price * v.number
-                })
+                let total = this.state.list.reduce((prev, curr) => {
+                    if (curr.isActive) {
+                        prev += curr.price * curr.number
+                    }
+                    return prev
+                }, 0)
                 this.setState({
-                    total: all
+                    total
                 })
-                // this.state.list.filter(v => v.isActive).forEach(v => {
-                //     all+= v.price * v.number
-                // })
-                // this.setState({
-                //     all
-                // })
             }
             componentDidUpdate = () => {
                 this.computedAll()

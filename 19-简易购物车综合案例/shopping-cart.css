@@ -60,6 +60,9 @@ li>button:hover {
 .minus, .add {
     cursor: pointer;
 }
+span {
+    user-select: none;
+}
 .total {
     margin-top: 40px;
 }
