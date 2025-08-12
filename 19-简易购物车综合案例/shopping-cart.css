@@ -1,0 +1,65 @@
+html, body, ul {
+    margin: 0;
+    padding: 0;
+}
+#app {
+    min-width: 820px;
+    display: flex;
+    justify-content: center;
+}
+.Cart {
+    margin-top: 40px;
+    min-width: 760px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+}
+li {
+    box-sizing: border-box;
+    width: 160px;
+    height: 170px;
+    padding: 20px;
+    border-radius: 20px;
+    border: 5px dashed #ccc;
+    /* background-color: red; */
+}
+.isActive {
+    border: 5px dashed rgba(255, 25, 0);
+}
+.isActive>button {
+    background-color: #82c7ee;
+}
+li>.title {
+    font-size: 20px;
+    font-weight: bold;
+}
+li>p {
+    margin: 0;
+}
+.price {
+    margin: 0 5px;
+}
+li>button {
+    padding: 4px 0;
+    font-size: 17px;
+    width: 100%;
+    color: #f0ecec;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 25, 0);
+}
+li>button:hover {
+    cursor: pointer;
+}
+.minus, .add {
+    cursor: pointer;
+}
+.total {
+    margin-top: 40px;
+}

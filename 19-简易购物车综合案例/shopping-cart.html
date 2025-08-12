@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./shopping-cart.css">
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <script src="../babel.min.js"></script>
+    <script src="../prop-types.js"></script>
+    <script src="../lodash.min.js"></script>
+    <script src="../immutable.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        let app = document.querySelector('#app');
+        let root = ReactDOM.createRoot(app);
+
+        // 购物车组件
+        class Cart extends React.Component {
+            state = {
+                list: [],
+                total: 0
+            }
+            handleMinus = (id) => {
+                return () => {
+                    let list = _.cloneDeep(this.state.list)
+                    let number = list.find(v => v.id === id).number
+                    if (number > 1) {
+                        number--   
+                    }
+                    this.setState({
+                        list
+                    })
+                }
+            }
+            handleAdd = (id) => {
+                return () => {
+                    let list = _.cloneDeep(this.state.list)
+                    let number = list.find(v => v.id === id).number
+                    number++
+                    this.setState({
+                        list
+                    })
+                }
+            }
+            handleAddToCart = (id) => {
+                return () => {
+                    let list = _.cloneDeep(this.state.list)
+                    let product = list.find(v => v.id === id)
+                    product.isActive = !product.isActive
+                    this.setState({
+                        list
+                    })
+                }
+            }
+            computedAll = () => {
+                let all = 0
+                let n_list = this.state.list.filter(v => v.isActive)
+                n_list.forEach(v => {
+                    all = all + v.price * v.number
+                })
+                this.setState({
+                    total: all
+                })
+                // this.state.list.filter(v => v.isActive).forEach(v => {
+                //     all+= v.price * v.number
+                // })
+                // this.setState({
+                //     all
+                // })
+            }
+            componentDidUpdate = () => {
+                this.computedAll()
+            }
+            componentDidMount() {
+                fetch('./data.json').then(res => {
+                    return res.json()
+                }).then(data => {
+                    if (data.errcode === 0) {
+                        this.setState({
+                            list: data.list
+                        })
+                    }
+                })
+            }
+            render() {
+                return (
+                    <div className="Cart">
+                        <ul>
+                            {
+                                this.state.list.map(v => <Product key={v.id} {...v} handleAdd={this.handleAdd}
+                                 handleMinus={this.handleMinus} handleAddToCart={this.handleAddToCart} />)
+                            }
+                        </ul>
+                        <span className="total">总金额：{this.state.total}元</span>
+                    </div>
+                )
+            }
+        }
+        // 商品组件
+        class Product extends React.Component {
+            render() {
+                const { id, isActive, name, price, number, handleAdd, handleMinus, handleAddToCart} = this.props
+                return (
+                    <li className={ isActive ? 'isActive' : '' }>
+                        <div className="title">{name}</div>
+                        <p>单价：{price}</p>                
+                        <div>
+                            <span className="minus" onClick={handleMinus(id)}>-</span>
+                            <span className="price">{number}</span>
+                            <span className="add" onClick={handleAdd(id)}>+</span>
+                        </div>
+                        <button onClick={handleAddToCart(id)}>添加至购物车</button>
+                    </li>
+                )
+            }
+        }
+        let element = (
+            <Cart />
+        )
+        root.render(element);
+    </script>
+</body>
+</html>

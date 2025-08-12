@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../react.development.js"></script>
+    <script src="../react-dom.development.js"></script>
+    <script src="../babel.min.js"></script>
+    <script src="../prop-types.js"></script>
+    <script src="../lodash.min.js"></script>
+    <script src="../immutable.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        /**
+         * 组件跨层级通信方案Context
+         * 
+         * Context提供了一个无需为每层组件手动添加props，就能
+         * 在组件树间进行数据传递的方法。
+         * 
+         * const MyContext = React.createContext()
+         * <MyContext.Provider>、<MyContext.Consumer>
+         * static contextType = MyContext
+        */
+        let app = document.querySelector('#app');
+        let root = ReactDOM.createRoot(app);
+
+        const MyContext = React.createContext()
+        class Welcome extends React.Component {
+            state = {
+                msg: 'welcome组件的数据'
+            }
+            render() {
+                return (
+                    <div>
+                        hello Welcome
+                        <MyContext.Provider value={this.state.msg}>
+                            <Head />
+                        </MyContext.Provider>
+                    </div>
+                )
+            }
+        }
+
+        class Head extends React.Component {
+            render() {
+                return (
+                    <div>
+                        hello Head
+                        <Title />
+                    </div>
+                )
+            }
+        }
+
+        class Title extends React.Component {
+            static contextType = MyContext
+            componentDidMount() {
+                console.log(this.context);
+            }
+            render() {
+                return (
+                    <div>
+                        hello Title，
+                        <MyContext.Consumer>
+                            { value => value }
+                        </MyContext.Consumer>
+                    </div>
+                )
+            }
+        }
+
+        let element = (
+            <Welcome />
+        )
+        root.render(element);
+    </script>
+</body>
+
+</html>
