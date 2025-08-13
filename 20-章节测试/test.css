@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+li {
+    list-style: none;
+    height: 20px;
+    box-sizing: border-box;
+}
+.transfer {
+    display: flex;
+    align-items: center;
+    width: 400px;
+    margin: 20px auto;
+}
+.transfer ul {
+    width: 150px;
+    height: 400px;
+    border: 1px black solid;
+}
+.transfer button {
+    height: 50px;
+    flex-grow: 1;
+}
+.active {
+    color: #fff;
+    background-color: #ff0000;
+}
